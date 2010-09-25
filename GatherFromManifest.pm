@@ -1,12 +1,12 @@
 package Dist::Zilla::Plugin::GatherFromManifest;
 
-# $Id: GatherFromManifest.pm 21 2010-09-23 14:22:45Z stro $
+# $Id: GatherFromManifest.pm 23 2010-09-25 12:01:20Z stro $
 
 use strict;
 use warnings;
 
 BEGIN {
-  $Dist::Zilla::Plugin::GatherFromManifest::VERSION = '1.000';
+  $Dist::Zilla::Plugin::GatherFromManifest::VERSION = '1.001';
 }
 
 =head1 NAME
@@ -15,9 +15,9 @@ Dist::Zilla::Plugin::GatherFromManifest - gather all files from MANIFEST
 
 =head1 VERSION
 
-version 0.001
+version 1.001
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
     [GatherFromManifest]
 
@@ -53,7 +53,7 @@ configuration file is located.
 This parameter can be set to gather all the files found under a common
 directory.  See the L<description block in GatherDir documentation|Dist::Zilla::Plugin::GatherDir#DESCRIPTION> for an example.
 
-=head1 METHODS
+=head1 SUBROUTINES/METHODS
 
 =cut
 
@@ -105,7 +105,7 @@ sub gather_files {
     }
 
     my $root = "" . $self->root;
-    $root =~ s{^~([\\/])}{File::HomeDir->my_home . $1}e;
+    $root =~ s{^~([\\/])}{File::HomeDir->my_home . $1}ex;
     $root = Path::Class::dir($root);
 
     $manifest = File::Spec->catdir($root, $manifest);
@@ -118,7 +118,7 @@ sub gather_files {
     }
 
     for my $file (@files) {
-        (my $newname = $file->name) =~ s{\A\Q$root\E[\\/]}{}g;
+        (my $newname = $file->name) =~ s{\A\Q$root\E[\\/]}{}gx;
         $newname = File::Spec->catdir($self->prefix, $newname) if $self->prefix;
         $newname = Path::Class::dir($newname)->as_foreign('Unix')->stringify;
 
@@ -152,7 +152,7 @@ Serguei Trouchelle <stro@cpan.org>
 
 Some parts of code is borrowed from L<Dist::Zilla::Plugin::GatherDir> and L<Dist::Zilla::Plugin::ManifestSkip> written by Ricardo SIGNES <rjbs@cpan.org>
 
-=head1 COPYRIGHT AND LICENSE
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (c) 2010 by Serguei Trouchelle
 

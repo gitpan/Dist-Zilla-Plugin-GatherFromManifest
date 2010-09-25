@@ -11,12 +11,7 @@ use ExtUtils::MakeMaker 6.31;
 my %WriteMakefileArgs = (
   'ABSTRACT' => 'gather all files from MANIFEST',
   'AUTHOR' => 'Serguei Trouchelle <stro@cpan.org>',
-  'BUILD_REQUIRES' => {
-    'Dist::Zilla::Plugin::GatherFromManifest' => '0',
-    'English' => '0',
-    'Test' => '0',
-    'Test::More' => '0'
-  },
+  'BUILD_REQUIRES' => {},
   'CONFIGURE_REQUIRES' => {
     'ExtUtils::MakeMaker' => '6.31'
   },
@@ -24,8 +19,19 @@ my %WriteMakefileArgs = (
   'EXE_FILES' => [],
   'LICENSE' => 'perl',
   'NAME' => 'Dist::Zilla::Plugin::GatherFromManifest',
-  'PREREQ_PM' => {},
-  'VERSION' => '0.001',
+  'PREREQ_PM' => {
+    'Dist::Zilla::Role::FileGatherer' => '0',
+    'ExtUtils::Manifest' => '0',
+    'File::Find::Rule' => '0',
+    'File::HomeDir' => '0',
+    'File::Spec' => '0',
+    'Moose' => '0',
+    'Moose::Autobox' => '0',
+    'MooseX::Types::Path::Class' => '0',
+    'Path::Class' => '0',
+    'namespace::autoclean' => '0'
+  },
+  'VERSION' => '1.001',
   'test' => {
     'TESTS' => 't/*.t'
   }
